@@ -320,15 +320,15 @@ function FilterSection({ title, children, isOpen, toggle }) {
   );
 }
 function ProductCard({ data }) {
-  let { cartItems, setCartItems } = useContext(MyGlobalContext);
+  let { cartCount, setCartCount } = useContext(MyGlobalContext);
 
   let { id, name, price, image, slug } = data;
 
-  let existingItem = cartItems?.find((item) => item.id === id);
+  let existingItem = cartCount?.find((item) => item.id === id);
 
   let addToCart = () => {
-    let updatedCart = [...(cartItems || []), { ...data, quantity: 1 }];
-    setCartItems(updatedCart);
+    let updatedCart = [...(cartCount || []), { ...data, quantity: 1 }];
+    setCartCount(updatedCart);
     toast.success("Added to cart!");
   };
 
@@ -341,8 +341,8 @@ function ProductCard({ data }) {
       cancelButtonColor: "#ef4444",
     }).then((result) => {
       if (result.isConfirmed) {
-        let filtered = cartItems.filter((item) => item.id !== id);
-        setCartItems(filtered);
+        let filtered = cartCount.filter((item) => item.id !== id);
+        setCartCount(filtered);
       }
     });
   };
@@ -364,14 +364,14 @@ function ProductCard({ data }) {
         {existingItem ? (
           <button
             onClick={removeFromCart}
-            className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md w-full"
+            className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md w-full cursor-pointer"
           >
             Remove
           </button>
         ) : (
           <button
             onClick={addToCart}
-            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md w-full"
+            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md w-full cursor-pointer"
           >
             Add to Cart
           </button>
@@ -380,3 +380,5 @@ function ProductCard({ data }) {
     </div>
   );
 }
+
+
